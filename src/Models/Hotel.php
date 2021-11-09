@@ -3,6 +3,7 @@
 namespace Tourvisor\Models;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 /**
  * Class Hotel
@@ -24,6 +25,7 @@ use Illuminate\Support\Arr;
  * @property string $region - название региона
  * @property int $subregioncode - идентификатор субрегиона
  * @property string $subregion - название субрегиона
+ * @property Collection|Tour[] $tours - название субрегиона
  */
 class Hotel extends AbstractModel
 {

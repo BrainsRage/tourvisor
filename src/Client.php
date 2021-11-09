@@ -2,17 +2,19 @@
 
 namespace Tourvisor;
 
+use GuzzleHttp\Utils;
+use Illuminate\Support\Facades\Http;
 use Tourvisor\Exceptions\AuthorizeException;
 use Tourvisor\Requests\AbstractRequest;
 
 class Client
 {
     /**
-     * @var array авторихзационные данные от ЛК tourvisor.ru
+     * @var array авторизационные данные от ЛК tourvisor.ru
      */
     protected $authData = [
         'authlogin' => null,
-        'authpass'  => null
+        'authpass' => null
     ];
     /** @var \GuzzleHttp\Client */
     protected $client;
@@ -49,6 +51,6 @@ class Client
                 $this->authData['authlogin']));
         }
 
-        return \GuzzleHttp\json_decode($res, true);
+        return Utils::jsonDecode($res, true);
     }
 }

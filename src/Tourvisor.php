@@ -11,6 +11,7 @@ use Tourvisor\Models\Meal;
 use Tourvisor\Models\Operator;
 use Tourvisor\Models\Region;
 use Tourvisor\Models\Review;
+use Tourvisor\Models\SearchStatus;
 use Tourvisor\Models\Star;
 use Tourvisor\Models\SubRegion;
 use Tourvisor\Models\Tour;
@@ -57,10 +58,10 @@ class Tourvisor
         }
         switch (true) {
             case $request instanceof SearchRequest:
-                return intval(Arr::get($response, 'result.requestid'));
+                return (int)Arr::get($response, 'result.requestid');
             case $request instanceof SearchResultRequest:
                 return [
-                    'status' => Arr::get($response, 'data.status'),
+                    'status' => new SearchStatus(Arr::get($response, 'data.status', [])),
                     'hotels' => collect(array_map([$this, 'transformHotelArray'],
                         Arr::get($response, 'data.result.hotel', [])))
                 ];
@@ -111,7 +112,7 @@ class Tourvisor
                 return null;
             case $request instanceof HotToursRequest:
                 return [
-                    'count' => intval(Arr::get($response, 'hottours.hotcount')),
+                    'count' => (int)Arr::get($response, 'hottours.hotcount'),
                     'tours' => collect(array_map([$this, 'transformTourArray'], Arr::get($response, 'hottours.tour', [])))
                 ];
         }

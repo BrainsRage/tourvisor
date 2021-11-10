@@ -39,12 +39,14 @@ class Client
      * @return array
      * @throws \Tourvisor\Exceptions\HasEmptyRequiredParamsException
      * @throws \Tourvisor\Exceptions\AuthorizeException
+     * @throws \GuzzleHttp\Exception\ConnectException
      */
     public function sendRequest(AbstractRequest $request)
     {
-        $res = $this->client->get($request->getEndPoint(), [
+        $options = array_merge($request->getRequestOptions(), [
             'query' => array_merge($this->authData, $request->getParams())
-        ])->getBody()->getContents();
+        ]);
+        $res = $this->client->get($request->getEndPoint(), $options)->getBody()->getContents();
 
         if (preg_match("/Authorization Error/i", $res)) {
             throw new AuthorizeException(sprintf("Authorization Error for login %s",

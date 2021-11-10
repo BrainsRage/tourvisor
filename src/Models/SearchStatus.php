@@ -19,4 +19,9 @@ class SearchStatus extends AbstractModel
     {
         return $this->state === 'searching';
     }
+
+    public function isFinished(): bool
+    {
+        return $this->state === 'finished';
+    }
 }

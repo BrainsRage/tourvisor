@@ -18,7 +18,12 @@ abstract class AbstractRequest
     /**
      * @var array параметры запросов
      */
-    protected $params = [];
+    protected array $params = [];
+
+    /**
+     * @var array опции запроса
+     */
+    protected array $requestOptions = [];
 
     /**
      * @var array массив ключей обязательных параметров
@@ -36,7 +41,7 @@ abstract class AbstractRequest
      *
      * @throws \Tourvisor\Exceptions\NoEndPointException
      */
-    public function __construct(array $params = [])
+    public function __construct(array $params = [], array $requestOptions = [])
     {
         if (empty($this->endPoint)) {
             throw new NoEndPointException('Request ' . static::class . ' has empty endpoint');
@@ -45,6 +50,7 @@ abstract class AbstractRequest
         foreach ($params as $key => $param) {
             $this->__set($key, $param);
         }
+        $this->requestOptions = $requestOptions;
     }
 
     /**
@@ -82,6 +88,22 @@ abstract class AbstractRequest
     public function __get($name)
     {
         return Arr::get($this->params, $name);
+    }
+
+    /**
+     * @return array
+     */
+    public function getRequestOptions(): array
+    {
+        return $this->requestOptions;
+    }
+
+    /**
+     * @param array $requestOptions
+     */
+    public function setRequestOptions(array $requestOptions): void
+    {
+        $this->requestOptions = $requestOptions;
     }
 
     /**

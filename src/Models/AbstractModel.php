@@ -68,7 +68,7 @@ abstract class AbstractModel implements ArrayAccess, Arrayable, Jsonable, JsonSe
      * @param $name
      * @return mixed|null
      */
-    public function getAttribute($name)
+    public function getAttribute($name): mixed
     {
         if (isset($this->attributes[$name])) {
             return $this->attributes[$name];
@@ -81,7 +81,7 @@ abstract class AbstractModel implements ArrayAccess, Arrayable, Jsonable, JsonSe
      * @param $name
      * @param $value
      */
-    public function setAttribute($name, $value)
+    public function setAttribute($name, $value): void
     {
         if(isset($this->fieldAliases[$name])){
             $name = $this->fieldAliases[$name];
@@ -170,7 +170,7 @@ abstract class AbstractModel implements ArrayAccess, Arrayable, Jsonable, JsonSe
      * @param  mixed  $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return ! is_null($this->getAttribute($offset));
     }
@@ -181,7 +181,7 @@ abstract class AbstractModel implements ArrayAccess, Arrayable, Jsonable, JsonSe
      * @param  mixed  $offset
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->getAttribute($offset);
     }
@@ -193,7 +193,7 @@ abstract class AbstractModel implements ArrayAccess, Arrayable, Jsonable, JsonSe
      * @param  mixed  $value
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->setAttribute($offset, $value);
     }
@@ -204,7 +204,7 @@ abstract class AbstractModel implements ArrayAccess, Arrayable, Jsonable, JsonSe
      * @param  mixed  $offset
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->attributes[$offset]);
     }
